@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin:0px;padding:0px;}
+			body{background: #42509a;height:1000px;}
+			#wraper{width:800px;height:500px;margin:100px auto;background:url(img/bg.jpg) no-repeat;position: relative;overflow: hidden;}
+			#wraper li{position: absolute;list-style: none;}
+			#wraper li.pic1{top:50px;left:200px;}
+			#wraper li.pic2{top:150px;left:300px;}
+			#wraper li.pic3{top:200px;left:200px;}
+			#wraper li.pic4{top:50px;left:500px;}
+			#wraper li.pic5{top:300px;left:300px;}
+			#wraper li.pic6{top:200px;left:500px;}
+			#wraper li.pic7{top:300px;left:550px;}
+		</style>
+		<script>
+			window.onload=function(){
+				var oWraper=document.getElementById("wraper");
+				var aLi=oWraper.children;
+				var x=0;
+				var y=0;
+				document.onmousedown=function(ev){
+					var disX=ev.clientX-x;
+					var disY=ev.clientY-y;
+					
+					document.onmousemove=function(ev){
+						x=ev.clientX-disX;
+						y=ev.clientY-disY;
+						for(var i=0;i<aLi.length;i++){
+							aLi[i].style.marginLeft=x*aLi[i].style.zIndex/60+'px';
+							aLi[i].style.marginTop=y*aLi[i].style.zIndex/60+'px';
+						}
+					};
+					document.onmouseup=function(){
+						document.onmousemove=null;
+						document.onmouseup=null;
+					};
+					return false;
+				};
+			
+			}
+		</script>
+	</head>
+	<body>
+		<ul id="wraper">
+			<li class="pic1" style="z-index: 5;"><img src="img/1.jpg" alt="" /></li>
+			<li class="pic2" style="z-index: 6;"><img src="img/2.jpg" alt="" /></li>
+			<li class="pic3" style="z-index: 3;"><img src="img/3.jpg" alt="" /></li>
+			<li class="pic4" style="z-index: 4;"><img src="img/4.jpg" alt="" /></li>
+			<li class="pic5" style="z-index: 1;"><img src="img/5.jpg" alt="" /></li>
+			<li class="pic6" style="z-index: 2;"><img src="img/6.jpg" alt="" /></li>
+			<li class="pic7" style="z-index: 7;"><img src="img/7.jpg" alt="" /></li>
+		</ul>
+	</body>
+</html>

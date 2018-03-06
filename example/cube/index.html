@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.box{width:200px;height:200px;margin:100px auto;transform-origin:center;transform:perspective(800px) rotateY(0deg) rotateX(0deg);transform-style:preserve-3d;}
+			.box div{position: absolute;top:0px;left:0px;width:200px;height:200px;}
+			.box .face{background: yellow;transform:translateZ(100px) rotateX(0deg);}
+			.box .back{background: #996;transform:translateZ(-100px) rotateX(0deg);}
+			.box .top{background: #234;transform:translateY(-100px) rotateX(-90deg);}
+			.box .bottom{background: green;transform:translateY(100px) rotateX(-90deg);}
+			.box .left{background: blue;transform:translateX(-100px) rotateY(90deg);}
+			.box .right{background: pink;transform:translateX(100px) rotateY(90deg);}
+		</style>
+		<script>
+			window.onload=function(){
+				var oBox=document.getElementById("box");
+				var bLeft=false;
+				var bRight=false;
+				var bTop=false;
+				var bBottom=false;
+				var x=0;//x轴旋转角度
+				var y=0;//y轴旋转角度
+				//键盘事件
+				//
+				document.onkeydown=function(ev){
+					switch(ev.keyCode){
+						case 37:
+							bLeft=true;
+							break;
+						case 39:
+							bRight=true;
+							break;
+						case 38:
+							bTop=true;
+							break;
+						case 40:
+							bBottom=true;
+							break;
+					}
+				}
+				document.onkeyup=function(ev){
+					switch(ev.keyCode){
+						case 37:
+							bLeft=false;
+							break;
+						case 38:
+							bTop=false;
+							break;
+						case 39:
+							bRight=false;
+							break;
+						case 40:
+							bBottom=false;
+							break;
+					}
+				}
+				setInterval(function(){
+					if(bLeft){
+						y-=4;
+					}
+					if(bRight){
+						y+=4;
+					}
+					if(bTop){
+						x-=4;
+					}
+					if(bBottom){
+						x+=4;
+					}
+					oBox.style.transform='perspective(800px) rotateY('+y+'deg) rotateX('+-x+'deg)';
+				},30);
+				
+				//鼠标
+				document.onmousedown=function(ev){
+					var disX=ev.clientY-x;
+					var disY=ev.clientX-y;
+					document.onmousemove=function(ev){
+						x=ev.clientY-disX;
+						y=ev.clientX-disY;
+						oBox.style.transform='perspective(800px) rotateY('+y+'deg) rotateX('+-x+'deg)'
+					};
+					document.onmouseup=function(){
+						document.onmouseup=null;
+						document.onmousemove=null;
+					};
+					return false;
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<div class="face"></div>
+			<div class="back"></div>
+			<div class="top"></div>
+			<div class="bottom"></div>
+			<div class="left"></div>
+			<div class="right"></div>
+		</div>
+	</body>
+</html>

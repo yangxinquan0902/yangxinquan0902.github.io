@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin:0px;padding:0px;}
+			#box{width:1200px;margin:0 auto;}
+			#box li{list-style:none;width:280px;margin-left:20px;float:left;}
+			#box li div{width:258px;border:1px solid #ccc;padding:10px;}
+			#box li div:hover{border:1px solid red;}
+			#box li div img{width:}
+			#box li div p{line-height:30px;font-size:16px;}
+		</style>
+		<script src="ajax.js"></script>
+		<script>
+			window.onload=function(){
+				var oBox=document.getElementById("box");
+				var aLi=oBox.getElementsByTagName('li');
+				var Bok=false;
+				
+				createList20();
+				function createList20(){
+					ajax({
+						url:'test.txt',
+						type:'GET',
+						success:function(data){
+							var data=JSON.parse(data);
+							for(var i=0;i<20;i++){
+								var _index = minHeight();
+								var oDiv=document.createElement('div');
+								var oImg=document.createElement('img');
+								oImg.src=data[i].preview;
+								oImg.style.width='258px';
+								oImg.style.height=data[i].height*(258/data[i].width)+'px';
+								oDiv.appendChild( oImg );
+								var oP=document.createElement('p');
+								oP.innerHTML=data[i].title;
+								oDiv.appendChild( oP );
+								aLi[_index].appendChild( oDiv );
+							}
+							Bok=false;
+						},
+						error:function(){
+							alert("加载失败")
+						}
+					});
+				};
+				
+				//滚动条事件
+				window.onscroll=function(){
+					var _index=minHeight();
+					var oLi=aLi[_index];
+					var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+					var clientHeight=document.documentElement.clientHeight;
+					if(getTop(oLi)+oLi.offsetHeight<clientHeight+scrollTop){
+						if(Bok)return;
+						Bok=true;
+						createList20();
+					}
+				}
+				
+				
+				//找最小高度
+				function minHeight(){
+					var index=0;
+					var minHeight=aLi[index].offsetHeight;
+					for(var i=0; i<aLi.length; i++){
+						if(aLi[i].offsetHeight<minHeight){
+							minHeight=aLi[i].offsetHeight;
+							index=i;
+						}
+					}
+					return index;
+				};
+				
+				//到可视区窗口的距离
+				function getTop(obj){
+					var iTop=0;
+					while(obj){
+						iTop+=obj.offsetTop;
+						obj=obj.offsetParent;
+					}
+					return iTop;
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<ul id="box">
+			<li></li>	
+			<li></li>	
+			<li></li>	
+			<li></li>	
+		</ul>
+	</body>
+</html>

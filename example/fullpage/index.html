@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>工作总结</title>
+<link rel="stylesheet" href="css/fullpage.css">
+<style>
+#menu { position: fixed; left: 0px; top: 10px; list-style-type: none; z-index:999;}
+#menu li { float: left; margin:0 10px 0 0; font-size: 14px;}
+#menu a { padding: 10px 20px; background-color: #fff; color: #333; text-decoration: none;}
+#menu .active a { color: #fff; background-color: #333;}
+.section { text-align: center; font: 50px "Microsoft Yahei"; color: #fff;}
+.section1 { position: relative; left: -120%;}
+.section2 { position: relative; bottom: -120%;}
+.section3 { display: none;}
+</style>
+<script src="js/jquery.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/fullpage.js"></script>
+<script>
+$(document).ready(function() {
+	$.fn.fullpage({
+		navigation:true,
+		slidesColor: ['#1bbc9b', '#4BBFC3', '#7BAABE'],
+		anchors: ['page1', 'page2', 'page3'],
+		menu: '#menu',
+		afterLoad: function(anchorLink, index){
+			if(index == '1'){
+				$('.section1').delay(500).animate({
+					left: '0'
+				}, 1500, 'easeOutExpo');
+			}
+			if(index == '2'){
+				$('.section2').delay(500).animate({
+					bottom: '0'
+				}, 1500, 'easeOutExpo');
+			}
+			if(index == '3'){
+				$('.section3').fadeIn(2000);
+			}
+		},
+
+		onLeave: function(index, direction){
+			if(index == '1'){
+				$('.section1').animate({
+					left: '-120%'
+				}, 1500, 'easeOutExpo');
+			}
+			if(index == '2'){
+				$('.section2').delay(500).animate({
+					bottom: '-120%'
+				}, 1500, 'easeOutExpo');
+			}
+			if(index == '3'){
+				$('.section3').fadeOut(2000);
+			}
+		}
+	});
+});
+</script>
+</head>
+<body>
+
+<ul id="menu">
+	<li data-menuanchor="page1" class="active"><a href="#page1">工作总结</a></li>
+	<li data-menuanchor="page2"><a href="#page2">个人成长</a></li>
+	<li data-menuanchor="page3"><a href="#page3">明年规划</a></li>
+</ul>
+<div class="section">
+	<h3>工作总结</h3>
+	<div class="item section1"><p>从入职到现在，我在柴总和瑞大神的指导，在山林和红红等同事的陪伴下继续走在前端之路上。在这段时间的学习和项目中使我对前端业务需求和项目开发流程有一定的了解和认识，对前端也有自己的理解。前端是建立在以产品为核心，用户体验为基础的一门技术（其实我个人更喜欢用艺术来形容前端），每一个细微的视觉效果、交互体验都能给用户带去不同的感受，舒适、简单、不失高雅的前端产品更能获得用户的好评。 前端是整个项目的桥梁，沟通产品、后台、和设计。整个项目中不仅需要对自己技术肯定，更需要了解业务，才能更有效率的开发和维护产品。在这三个月中完成了pc端和app端页面制作与效果添加，虽然基本效果已经完成，但是细节还需要进一步优化。</p></div>
+</div>
+<div class="section">
+	<h3>个人成长</h3>
+	<div class="item section2"><p>请查看左上角，点击可以控制</p></div>
+</div>
+<div class="section">
+	<h3>明年规划</h3>
+	<div class="item section3">
+		<p>1.把消费投资这一块做好，同时优化代码，保证代码的重用性</p>
+		<p>2.继续掌握一些框架的使用，方便开发</p>
+		<p>3.多看一些产品、交互、后端以及视觉体验方面的书籍，丰富自己的知识面</p>
+		<p>4.对主要框架如react.js、小程序多加学习研究，为我所用，用到我们的网站上</p>
+	</div>
+</div>
+
+</body>
+</html>

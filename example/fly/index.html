@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin:0px;padding:0px;}
+			input{outline:none;}
+			#wrap{width:800px;height:300px;margin:50px auto;border:2px solid red;position: relative;}
+			#wrap input{position: absolute;top:80px;left:20px;padding:10px 20px;}
+			#wrap #target{width:80px;height:80px;line-height:80px;font-size:30px;text-align:center;border:2px dashed green;position: absolute;top:60px;right:20px;}
+			.newDiv{width:60px;height:60px;border-radius:50%;background:red;}
+			.shake{animation:0.4s shake linear;}
+			@keyframes shake{
+				25%{transform: translateX(20px);}
+				50%{transform: translateX(0px);}
+				75%{transform: translateX(-20px);}
+				100%{transform: translateX(0px);}
+			}
+		</style>
+		<script src="jquery-1.7.2.js"></script>
+		<script src="fly.js"></script>
+		<script>
+			$(function(){
+				function pow(obj,target){
+					var num=0;//计数
+					var bOK=false;//防止连续点击
+					obj.on('click',function(ev){
+						target.removeClass('shake');//移除class
+						if(bOK)return;
+						bOK=true;
+						num++;
+						var oDiv=$('<div class="newDiv"></div>');//创建div小球
+						oDiv.fly({
+							start:{ //起始位置
+								left:ev.clientX,
+								top:ev.clientY,
+							},
+							end:{//结束位置
+								left:target.offset().left,
+								top:target.offset().top,
+								width:20,
+								height:20,
+							},
+							onEnd:function(){//结束后的回调函数
+								bOK=false;
+								target.html(num);
+								target.addClass('shake');
+								oDiv.fadeOut('slow',function(){
+									$(this).remove();//结束后删除div
+								});
+							}
+						});
+					})
+				}
+				pow($('input'),$('#target'));
+			})
+		</script>
+	</head>
+	<body>
+		<div id="wrap">
+			<input type="button" value="点击" />
+			<div id="target">0</div>
+		</div>
+	</body>
+</html>
